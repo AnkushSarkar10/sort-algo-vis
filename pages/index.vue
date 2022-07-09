@@ -1,5 +1,5 @@
 <template>
-  <div class="text-4xl">
-    sup beta cuck
+  <div class="flex justify-center">
+    Sorting Algorithm Visualiser
   </div>
 </template>
