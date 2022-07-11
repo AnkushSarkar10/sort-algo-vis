@@ -1,3 +1,4 @@
+import { resolve } from "dns";
 import { defineStore } from "pinia";
 
 // types
@@ -7,7 +8,12 @@ interface State {
   min: number;
   max: number;
   sortSpeed: number;
-  animationsIndx: number[];
+  animationsIndx: {
+    swap_1: number | null;
+    swap_2: number | null;
+    done: number[];
+  };
+  sortable: boolean;
 }
 
 interface Getters {}
@@ -16,7 +22,6 @@ interface Actions {
   randomiseArr(): void;
   timeout(ms: number): void;
   bubleSort(arr: Array<number>): void;
-  // swapItems(arr: Array<number>, index1: number, index2: number): void;
 }
 
 export const useArrStore = defineStore<"array-store", State, {}, Actions>(
@@ -25,16 +30,26 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
     state: () => {
       return {
         array: [],
-        arrLen: 30,
+        arrLen: 80,
         min: 10,
         max: 180,
-        sortSpeed: 50, // in ms
-        animationsIndx: []
+        sortSpeed: 10, // in ms
+        animationsIndx: {
+          swap_1: null,
+          swap_2: null,
+          done: [],
+        },
+        sortable: true,
       };
     },
     actions: {
       randomiseArr() {
         this.array = [];
+        this.animationsIndx = {
+          swap_1: null,
+          swap_2: null,
+          done: [],
+        };
         for (let i = 0; i < this.arrLen; i++) {
           this.array.push(
             Math.floor(Math.random() * (this.max - this.min + 1) + this.min)
@@ -44,27 +59,25 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
       timeout(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
       },
-      // async swapItems(arr: Array<number>, index1: number, index2: number) {
-      //   this.indexsToCol = [index1, index2];
-      //   let temp = arr[index1];
-      //   arr[index1] = arr[index2];
-      //   arr[index2] = temp;
-      //   await this.timeout(this.sortSpeed);
-      // },
       async bubleSort(arr: Array<number>) {
+        this.sortable = false;
         for (let i = 0; i < this.arrLen; i++) {
           for (let j = 0; j < this.arrLen - i - 1; j++) {
+            console.log("happenin");
             if (arr[j] > arr[j + 1]) {
-              this.animationsIndx = [j, j+1];
-              // console.log(this.indexsToCol);
+              this.animationsIndx.swap_1 = j;
+              this.animationsIndx.swap_2 = j + 1;
               let temp = arr[j];
               arr[j] = arr[j + 1];
               arr[j + 1] = temp;
               await this.timeout(this.sortSpeed);
-              this.animationsIndx = [];
+              this.animationsIndx.swap_1 = null;
+              this.animationsIndx.swap_2 = null;
             }
           }
+          this.animationsIndx.done.push(this.arrLen - 1 - i);
         }
+        this.sortable = true;
       },
     },
   }

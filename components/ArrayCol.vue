@@ -13,22 +13,11 @@ const props = defineProps({
     required: true
   }
 });
-
-// const isChangeing = ref(false);
-
-// onMounted(() => {
-//   if (arrStore.indexsToCol != undefined) {
-//     console.log(arrStore.indexsToCol);
-//     if (props.index == arrStore.indexsToCol[0] || props.index == arrStore.indexsToCol[1]) {
-//       isChangeing.value = true;
-//     }
-//   }
-// })
 </script>
 
 <template>
   <div :style="{ height: props.item.toString() + 'px', 'background-color': props.col }"
-    class="w-5 mx-1 bg-white">
+    class="w-1 mx-0.5 bg-white">
   </div>
 </template>
 

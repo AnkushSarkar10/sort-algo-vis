@@ -2,25 +2,16 @@
 import { useArrStore } from "~/store";
 
 const arrStore = useArrStore();
-// const props = defineProps({
-//   array: {
-//     type: Array,
-//     required: true
-//   }
-// });
-
-// const custCol = reactive({
-//   "background-color": "white"
-// });
-// watch(props.array, (currentValue, oldValue) => {
-//   custCol["background-color"] = "red";
-// })
-
-const checkIfNeedAnimation = (index: number) => {
-  if(arrStore.animationsIndx[0] === index || arrStore.animationsIndx[1] === index) {
-    console.log("ok");
-    return true;
-  } return false;
+const passColors = (index: number) => {
+  if (index === arrStore.animationsIndx.swap_1) {
+    return "yellow";
+  } else if (index === arrStore.animationsIndx.swap_2){
+    return "red";
+  }else if (arrStore.animationsIndx.done.includes(index)){
+    return "green";
+  } else {
+    return "white";
+  }
 }
 
 </script>
@@ -28,8 +19,7 @@ const checkIfNeedAnimation = (index: number) => {
 <template>
   <div class="flex justify-center items-end mt-10">
     <div v-for="(item, index) in arrStore.array" :key="index">
-      <ArrayCol v-if="checkIfNeedAnimation(index)" :item="item" :col="'red'"></ArrayCol>
-      <ArrayCol v-else="" :item="item" :col="'white'"></ArrayCol>
+      <ArrayCol :item="item" :col="passColors(index)"></ArrayCol>
     </div>
   </div>
 </template>
