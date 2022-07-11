@@ -13,6 +13,7 @@ interface State {
     swap_2: number | null;
     done: number[];
   };
+  animations: { swap: number[]; done: number[] }[];
   sortable: boolean;
 }
 
@@ -40,6 +41,7 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           done: [],
         },
         sortable: true,
+        animations: []
       };
     },
     actions: {
@@ -59,23 +61,21 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
       timeout(ms: number) {
         return new Promise((resolve) => setTimeout(resolve, ms));
       },
-      async bubleSort(arr: Array<number>) {
+      bubleSort(arr: Array<number>) {
         this.sortable = false;
+        let anime:any = {};
         for (let i = 0; i < this.arrLen; i++) {
           for (let j = 0; j < this.arrLen - i - 1; j++) {
             console.log("happenin");
             if (arr[j] > arr[j + 1]) {
-              this.animationsIndx.swap_1 = j;
-              this.animationsIndx.swap_2 = j + 1;
+              anime.swap = [j, j+1];
+              this.animations.push(anime);
               let temp = arr[j];
               arr[j] = arr[j + 1];
               arr[j + 1] = temp;
-              await this.timeout(this.sortSpeed);
-              this.animationsIndx.swap_1 = null;
-              this.animationsIndx.swap_2 = null;
             }
           }
-          this.animationsIndx.done.push(this.arrLen - 1 - i);
+          this.animations.done.push(this.arrLen - 1 - i);
         }
         this.sortable = true;
       },
