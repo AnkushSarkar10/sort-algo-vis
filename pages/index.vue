@@ -1,5 +1,9 @@
+<script setup lang="ts">
+
+</script>
+
 <template>
-  <div class="flex justify-center">
+  <div class="flex flex-col justify-center">
     Sorting Algorithm Visualiser
   </div>
 </template>
