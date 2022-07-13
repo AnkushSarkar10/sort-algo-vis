@@ -2,27 +2,22 @@
 import { useArrStore } from "~/store";
 
 const arrStore = useArrStore();
-const passColors = (index: number) => {
-  if (index === arrStore.animationsIndx.swap_1) {
-    return "yellow";
-  } else if (index === arrStore.animationsIndx.swap_2){
-    return "red";
-  }else if (arrStore.animationsIndx.done.includes(index)){
-    return "green";
-  } else {
-    return "white";
+const props = defineProps({
+  passColors : {
+    type: Function,
+    require: true
   }
-}
+});
 
 </script>
 
 <template>
   <div class="flex justify-center items-end mt-10">
     <div v-for="(item, index) in arrStore.array" :key="index">
-      <ArrayCol :item="item" :col="passColors(index)"></ArrayCol>
+      <ArrayCol :item="item" :index="index" :passColors="props.passColors"></ArrayCol>
     </div>
   </div>
 </template>
 
-<script scoped>
-</script>
+<style scoped>
+</style>

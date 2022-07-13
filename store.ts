@@ -1,4 +1,3 @@
-import { resolve } from "dns";
 import { defineStore } from "pinia";
 
 // types
@@ -8,13 +7,17 @@ interface State {
   min: number;
   max: number;
   sortSpeed: number;
+  sliderDefault: number;
   animationsIndx: {
-    swap_1: number | null;
-    swap_2: number | null;
-    done: number[];
+    bubleSwap_1: number | null;
+    bubleSwap_2: number | null;
+    bubleDone: number;
+    mergeSwap : number | null,
+    mergeDone: number[];
   };
   sortable: boolean;
   stopSort: boolean;
+  // colColor: string;
 }
 
 interface Getters {}
@@ -23,7 +26,10 @@ interface Actions {
   randomiseArr(): void;
   genNewArr(): void;
   timeout(ms: number): void;
+  pauseSort(): void;
   bubleSort(): void;
+  merge(arr: number[], l: number, m: number, r: number): void;
+  mergeSort(arr?: number[], l?: number, r?: number): void;
 }
 
 export const useArrStore = defineStore<"array-store", State, {}, Actions>(
@@ -32,17 +38,21 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
     state: () => {
       return {
         array: [],
-        arrLen: 80,
+        arrLen: 90,
         min: 10,
-        max: 180,
-        sortSpeed: 5, // in ms
+        max: 190,
+        sortSpeed: 1, // in ms
+        sliderDefault: 80, // 0 | 20 | 40 | 60 | 80 | 100
         animationsIndx: {
-          swap_1: null,
-          swap_2: null,
-          done: [],
+          bubleSwap_1: null,
+          bubleSwap_2: null,
+          bubleDone: 0,
+          mergeSwap : null,
+          mergeDone: []
         },
         sortable: true,
         stopSort: false,
+        // colColor: ""
       };
     },
     actions: {
@@ -52,9 +62,11 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
       genNewArr() {
         this.array = [];
         this.animationsIndx = {
-          swap_1: null,
-          swap_2: null,
-          done: [],
+          bubleSwap_1: null,
+          bubleSwap_2: null,
+          bubleDone: 0,
+          mergeSwap : null,
+          mergeDone: []
         };
         for (let i = 0; i < this.arrLen; i++) {
           this.array.push(
@@ -67,9 +79,11 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
         this.sortable = true;
         this.array = [];
         this.animationsIndx = {
-          swap_1: null,
-          swap_2: null,
-          done: [],
+          bubleSwap_1: null,
+          bubleSwap_2: null,
+          bubleDone: 0,
+          mergeSwap : null,
+          mergeDone: []
         };
         for (let i = 0; i < this.arrLen; i++) {
           this.array.push(
@@ -77,32 +91,120 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           );
         }
       },
+      pauseSort() {
+        this.stopSort = true;
+        this.sortable = true;
+      },
+      // sorting algos
       async bubleSort() {
         if (this.sortable) {
-          this.stopSort = false;
-          console.log(this.stopSort);
           this.sortable = false;
+          this.stopSort = false;
+
           for (let i = 0; i < this.arrLen; i++) {
             for (let j = 0; j < this.arrLen - i - 1; j++) {
               if (this.array[j] > this.array[j + 1]) {
+                //
                 if (this.stopSort === true) {
-                  console.log(this.stopSort);
                   return;
                 }
-                this.animationsIndx.swap_1 = j;
-                this.animationsIndx.swap_2 = j + 1;
+                //
+                this.animationsIndx.bubleSwap_1 = j;
+                this.animationsIndx.bubleSwap_2 = j + 1;
                 let temp = this.array[j];
                 this.array[j] = this.array[j + 1];
                 this.array[j + 1] = temp;
                 await this.timeout(this.sortSpeed);
-                this.animationsIndx.swap_1 = null;
-                this.animationsIndx.swap_2 = null;
+                this.animationsIndx.bubleSwap_1 = null;
+                this.animationsIndx.bubleSwap_2 = null;
               }
             }
-            this.animationsIndx.done.push(this.arrLen - 1 - i);
+            this.animationsIndx.bubleDone++;
           }
           this.sortable = true;
         }
+      },
+      // First subarray is arr[l..m]
+      // Second subarray is arr[m+1..r]
+      async merge(arr: number[], l: number, m: number, r: number) {
+        // lengths of the first sub arr and second sub array
+        let n1 = m - l + 1;
+        let n2 = r - m;
+        // make temp arrays
+        let L = new Array(n1);
+        let R = new Array(n2);
+
+        // Copy data to temp arrays L[] and R[]
+        for (let i = 0; i < n1; i++) L[i] = arr[l + i];
+        for (let j = 0; j < n2; j++) R[j] = arr[m + 1 + j];
+
+        // Initial index of first subarray
+        let i = 0;
+        // Initial index of second subarray
+        let j = 0;
+        // Initial index of merged subarray
+        let k = l;
+
+        // the actual merging stuff
+        while (i < n1 && j < n2) {
+          if (this.stopSort) return;
+          // comparing the untouched elemets of the right temp array, to the untouched elemts of the left temp arr
+          if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            this.animationsIndx.mergeSwap = k;
+            await this.timeout(this.sortSpeed);
+            this.animationsIndx.mergeSwap = null;
+            i++;
+          } else {
+            arr[k] = R[j];
+            this.animationsIndx.mergeSwap = k;
+            await this.timeout(this.sortSpeed);
+            this.animationsIndx.mergeSwap = null;
+            j++;
+          }
+          k++;
+        }
+        // Copy the remaining elements of
+        // L[], if there are any
+        while (i < n1) {
+          arr[k] = L[i];
+          this.animationsIndx.mergeSwap = k;
+          await this.timeout(this.sortSpeed);
+          this.animationsIndx.mergeSwap = null;
+          i++;
+          k++;
+        }
+        // Copy the remaining elements of
+        // R[], if there are any
+        while (j < n2) {
+          arr[k] = R[j];
+          this.animationsIndx.mergeSwap = k;
+          await this.timeout(this.sortSpeed);
+          this.animationsIndx.mergeSwap = null;
+          j++;
+          k++;
+        }
+      },
+
+      // merge sort takes the global array, leftindex = 0, rightindex = array size - 1 as default arguments
+      async mergeSort(
+        arr: number[] = this.array,
+        l: number = 0,
+        r: number = this.arrLen - 1
+      ) {
+          // console.log("yo");
+          if (l >= r || this.stopSort) {
+            return; //returns recursively
+          }
+          // let m = l + parseInt(((r - l) / 2).toString());
+          let m = l + ((r - l) >> 1);
+          await this.mergeSort(arr, l, m);
+          await this.mergeSort(arr, m + 1, r);
+          await this.merge(arr, l, m, r);
+          for (let i = l; i <= r; i++) {
+            this.animationsIndx.mergeDone.push(i);
+          }
+          
       },
     },
   }

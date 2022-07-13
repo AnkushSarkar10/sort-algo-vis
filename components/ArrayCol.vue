@@ -1,25 +1,27 @@
 <script setup lang='ts'>
-import { useArrStore } from "~/store";
-import { storeToRefs } from 'pinia';
 
-const arrStore = useArrStore();
 const props = defineProps({
   item: {
     type: Number,
     required: true
   },
-  col: {
-    type: String,
+  index: {
+    type: Number,
     required: true
+  },
+  passColors : {
+    type: Function,
+    require: true
   }
 });
+
 </script>
 
 <template>
-  <div :style="{ height: props.item.toString() + 'px', 'background-color': props.col }"
+  <div :style="{ height: props.item.toString() + 'px', 'background-color': props.passColors(props.index) }"
     class="w-1 mx-0.5 bg-white">
   </div>
 </template>
 
-<script scoped>
-</script>
+<style scoped>
+</style>
