@@ -17,19 +17,19 @@ onMounted(() => {
 });
 
 const passColors = (index: number) => {
-    if (index === arrStore.animationsIndx.quickSwap) {
-        return "yellow";
-    } else if (arrStore.animationsIndx.quickDone.includes(index)) {
+    if (index === arrStore.animationsIndx.insertSwap) {
+        return "red";
+    } else if (arrStore.animationsIndx.insertDone.includes(index)) {
         return "green";
     } else {
         return "white";
     }
 }
 
-const quickSort = () => {
+const insertonSort = () => {
     if (arrStore.sortable) {
         arrStore.stopSort = false;
-        arrStore.quickSort();
+        arrStore.insertionSort();
         arrStore.sortable = false;
     }
 }
@@ -40,7 +40,7 @@ const quickSort = () => {
         <h1>{{ arrStore.array }}</h1>
         <ArrayTable :passColors="passColors"></ArrayTable>
         <div class="flex gap-10 mt-10">
-            <button class="btn btn-outline" @click="quickSort">Play</button>
+            <button class="btn btn-outline" @click="insertonSort">Play</button>
             <button class="btn btn-outline" @click="arrStore.pauseSort()">Pause</button>
             <button class="btn btn-outline" @click="arrStore.randomiseArr()">Randomize</button>
         </div>

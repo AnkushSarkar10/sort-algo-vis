@@ -11,7 +11,7 @@
                 <li><a href="/buble">Buble Sort</a></li>
                 <li><a href="/merge">Merge Sort</a></li>
                 <li><a href="/quick">Quick Sort</a></li>
-                <li><a>Insertion Sort</a></li>
+                <li><a href="/insertion">Insertion Sort</a></li>
             </ul>
         </div>
     </div>

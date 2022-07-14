@@ -16,6 +16,8 @@ interface State {
     mergeDone: number[];
     quickSwap: number | null;
     quickDone: number[];
+    insertSwap : number | null;
+    insertDone: number[];
   };
   sortable: boolean;
   stopSort: boolean;
@@ -34,6 +36,7 @@ interface Actions {
   mergeSort(arr?: number[], l?: number, r?: number): void;
   partition(arr: number[], start: number, end: number): Promise<number>;
   quickSort(arr?: number[], start?: number, end?: number): void;
+  insertionSort(arr?: number[], n?: number): void;
 }
 
 export const useArrStore = defineStore<"array-store", State, {}, Actions>(
@@ -55,6 +58,8 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           mergeDone: [],
           quickSwap: null,
           quickDone: [],
+          insertSwap: null,
+          insertDone : []
         },
         sortable: true,
         stopSort: false,
@@ -73,7 +78,9 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           mergeSwap: null,
           mergeDone: [],
           quickSwap: null,
-          quickDone: []
+          quickDone: [],
+          insertSwap: null,
+          insertDone : []
         };
         for (let i = 0; i < this.arrLen; i++) {
           this.array.push(
@@ -92,7 +99,9 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           mergeSwap: null,
           mergeDone: [],
           quickSwap: null,
-          quickDone: []
+          quickDone: [],
+          insertSwap: null,
+          insertDone : []
         };
         for (let i = 0; i < this.arrLen; i++) {
           this.array.push(
@@ -238,7 +247,7 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
         this.animationsIndx.quickSwap = pivotIndex;
         [arr[pivotIndex], arr[end]] = [arr[end], arr[pivotIndex]];
         await this.timeout(this.sortSpeed);
-        
+
         this.animationsIndx.quickSwap = null;
         return pivotIndex;
       },
@@ -258,9 +267,43 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
 
         // Recursively apply the same logic to the left and right subarrays
         await this.quickSort(arr, start, index - 1);
-        if (!this.stopSort) for (let i = 0; i <= index; i++ ) this.animationsIndx.quickDone.push(i);
+        if (!this.stopSort)
+          for (let i = 0; i <= index; i++)
+            this.animationsIndx.quickDone.push(i);
         await this.quickSort(arr, index + 1, end);
-        if (!this.stopSort) for (let i = index + 1; i <= end; i++ ) this.animationsIndx.quickDone.push(i);
+        if (!this.stopSort)
+          for (let i = index + 1; i <= end; i++)
+            this.animationsIndx.quickDone.push(i);
+      },
+      // insertion sort
+      async insertionSort(arr: number[] = this.array, n: number = this.arrLen) {
+        let i: number, key: number, j: number;
+        if (this.stopSort) return;
+        this.animationsIndx.insertDone.push(0);
+        for (i = 1; i < n; i++) {
+
+          key = arr[i];
+          j = i - 1;
+          /* Move elements of arr[0..i-1], that are  
+          greater than key, to one position ahead  
+          of their current position */
+          while (j >= 0 && arr[j] > key) {
+            if (this.stopSort) return;
+            this.animationsIndx.insertSwap = j;
+            arr[j + 1] = arr[j];
+            await this.timeout(this.sortSpeed);
+            this.animationsIndx.insertSwap = null;
+            
+            j = j - 1;
+          }
+          this.animationsIndx.insertSwap = j + 1;
+          arr[j + 1] = key;
+          await this.timeout(this.sortSpeed);
+          this.animationsIndx.insertSwap = null;
+          
+          if (this.stopSort) return;
+          this.animationsIndx.insertDone.push(i);
+        }
       },
     },
   }
