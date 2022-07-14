@@ -4,8 +4,8 @@ const arrStore = useArrStore();
 const speedDict = {
     0: 100,
     20: 75,
-    40: 5,
-    60: 35,
+    40: 54,
+    60: 45,
     80: 25,
     100: 15
 }

@@ -2,12 +2,12 @@
 import { useArrStore } from "~/store";
 const arrStore = useArrStore();
 const speedDict = {
-    0: 100,
-    20: 75,
-    40: 5,
-    60: 35,
-    80: 25,
-    100: 15
+    0: 70,
+    20: 40,
+    40: 25,
+    60: 15,
+    80: 8,
+    100: 1
 }
 
 onMounted(() => {

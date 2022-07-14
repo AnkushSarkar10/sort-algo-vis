@@ -2,12 +2,12 @@
 import { useArrStore } from "~/store";
 const arrStore = useArrStore();
 const speedDict = {
-    0: 100,
-    20: 75,
-    40: 5,
-    60: 35,
-    80: 25,
-    100: 15
+    0: 60,
+    20: 50,
+    40: 40,
+    60: 30,
+    80: 22,
+    100: 10
 }
 
 onMounted(() => {
@@ -18,7 +18,7 @@ onMounted(() => {
 
 const passColors = (index: number) => {
     if (index === arrStore.animationsIndx.quickSwap) {
-        return "yellow";
+        return "red";
     } else if (arrStore.animationsIndx.quickDone.includes(index)) {
         return "green";
     } else {

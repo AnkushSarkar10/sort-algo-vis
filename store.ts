@@ -293,7 +293,6 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
             arr[j + 1] = arr[j];
             await this.timeout(this.sortSpeed);
             this.animationsIndx.insertSwap = null;
-            
             j = j - 1;
           }
           this.animationsIndx.insertSwap = j + 1;
