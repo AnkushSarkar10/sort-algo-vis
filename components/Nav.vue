@@ -10,7 +10,7 @@
             <ul class="menu menu-horizontal p-0">
                 <li><a href="/buble">Buble Sort</a></li>
                 <li><a href="/merge">Merge Sort</a></li>
-                <li><a>Quick Sort</a></li>
+                <li><a href="/quick">Quick Sort</a></li>
                 <li><a>Insertion Sort</a></li>
             </ul>
         </div>

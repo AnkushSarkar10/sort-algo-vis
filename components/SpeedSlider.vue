@@ -14,6 +14,7 @@ const sliderVal = ref(arrStore.sliderDefault);
 watch(sliderVal, (currentValue) => {
     arrStore.sortSpeed = props.speedDict[currentValue];
 });
+
 </script>
 
 <template>

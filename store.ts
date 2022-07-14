@@ -12,12 +12,13 @@ interface State {
     bubleSwap_1: number | null;
     bubleSwap_2: number | null;
     bubleDone: number;
-    mergeSwap : number | null,
+    mergeSwap: number | null;
     mergeDone: number[];
+    quickSwap: number | null;
+    quickDone: number[];
   };
   sortable: boolean;
   stopSort: boolean;
-  // colColor: string;
 }
 
 interface Getters {}
@@ -27,9 +28,12 @@ interface Actions {
   genNewArr(): void;
   timeout(ms: number): void;
   pauseSort(): void;
+  // sorting algos
   bubleSort(): void;
   merge(arr: number[], l: number, m: number, r: number): void;
   mergeSort(arr?: number[], l?: number, r?: number): void;
+  partition(arr: number[], start: number, end: number): Promise<number>;
+  quickSort(arr?: number[], start?: number, end?: number): void;
 }
 
 export const useArrStore = defineStore<"array-store", State, {}, Actions>(
@@ -39,7 +43,7 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
       return {
         array: [],
         arrLen: 90,
-        min: 10,
+        min: 8,
         max: 190,
         sortSpeed: 1, // in ms
         sliderDefault: 80, // 0 | 20 | 40 | 60 | 80 | 100
@@ -47,12 +51,13 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           bubleSwap_1: null,
           bubleSwap_2: null,
           bubleDone: 0,
-          mergeSwap : null,
-          mergeDone: []
+          mergeSwap: null,
+          mergeDone: [],
+          quickSwap: null,
+          quickDone: [],
         },
         sortable: true,
         stopSort: false,
-        // colColor: ""
       };
     },
     actions: {
@@ -65,8 +70,10 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           bubleSwap_1: null,
           bubleSwap_2: null,
           bubleDone: 0,
-          mergeSwap : null,
-          mergeDone: []
+          mergeSwap: null,
+          mergeDone: [],
+          quickSwap: null,
+          quickDone: []
         };
         for (let i = 0; i < this.arrLen; i++) {
           this.array.push(
@@ -82,8 +89,10 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           bubleSwap_1: null,
           bubleSwap_2: null,
           bubleDone: 0,
-          mergeSwap : null,
-          mergeDone: []
+          mergeSwap: null,
+          mergeDone: [],
+          quickSwap: null,
+          quickDone: []
         };
         for (let i = 0; i < this.arrLen; i++) {
           this.array.push(
@@ -96,6 +105,7 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
         this.sortable = true;
       },
       // sorting algos
+      // Buble Sort
       async bubleSort() {
         if (this.sortable) {
           this.sortable = false;
@@ -124,6 +134,7 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           this.sortable = true;
         }
       },
+      // Merge Sort
       // First subarray is arr[l..m]
       // Second subarray is arr[m+1..r]
       async merge(arr: number[], l: number, m: number, r: number) {
@@ -192,19 +203,64 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
         l: number = 0,
         r: number = this.arrLen - 1
       ) {
-          // console.log("yo");
-          if (l >= r || this.stopSort) {
-            return; //returns recursively
+        if (l >= r || this.stopSort) {
+          return; //returns recursively
+        }
+
+        let m = l + ((r - l) >> 1);
+        await this.mergeSort(arr, l, m);
+        await this.mergeSort(arr, m + 1, r);
+        await this.merge(arr, l, m, r);
+        for (let i = l; i <= r; i++) {
+          this.animationsIndx.mergeDone.push(i);
+        }
+      },
+      // QuickSort
+      async partition(arr: number[], start: number, end: number) {
+        console.log("hey");
+        // Taking the last element as the pivot
+        const pivotValue = arr[end];
+        let pivotIndex = start;
+        for (let i = start; i < end; i++) {
+          if (this.stopSort) return;
+          if (arr[i] < pivotValue) {
+            // Swapping elements
+            this.animationsIndx.quickSwap = i;
+            [arr[i], arr[pivotIndex]] = [arr[pivotIndex], arr[i]];
+            await this.timeout(this.sortSpeed);
+            this.animationsIndx.quickSwap = null;
+            // Moving to next element
+            pivotIndex++;
           }
-          // let m = l + parseInt(((r - l) / 2).toString());
-          let m = l + ((r - l) >> 1);
-          await this.mergeSort(arr, l, m);
-          await this.mergeSort(arr, m + 1, r);
-          await this.merge(arr, l, m, r);
-          for (let i = l; i <= r; i++) {
-            this.animationsIndx.mergeDone.push(i);
-          }
-          
+        }
+        // Putting the pivot value in the middle
+        if (this.stopSort) return;
+        this.animationsIndx.quickSwap = pivotIndex;
+        [arr[pivotIndex], arr[end]] = [arr[end], arr[pivotIndex]];
+        await this.timeout(this.sortSpeed);
+        
+        this.animationsIndx.quickSwap = null;
+        return pivotIndex;
+      },
+
+      async quickSort(
+        arr: number[] = this.array,
+        start: number = 0,
+        end: number = this.arrLen - 1
+      ) {
+        // Base case or terminating case
+        if (start >= end || this.stopSort) {
+          return;
+        }
+
+        // Returns pivotIndex
+        let index = await this.partition(arr, start, end);
+
+        // Recursively apply the same logic to the left and right subarrays
+        await this.quickSort(arr, start, index - 1);
+        if (!this.stopSort) for (let i = 0; i <= index; i++ ) this.animationsIndx.quickDone.push(i);
+        await this.quickSort(arr, index + 1, end);
+        if (!this.stopSort) for (let i = index + 1; i <= end; i++ ) this.animationsIndx.quickDone.push(i);
       },
     },
   }

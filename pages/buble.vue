@@ -2,11 +2,11 @@
 import { useArrStore } from "~/store";
 const arrStore = useArrStore();
 const speedDict = {
-    0: 70,
-    20: 40,
-    40: 30,
-    60: 20,
-    80: 10,
+    0: 60,
+    20: 30,
+    40: 20,
+    60: 10,
+    80: 5,
     100: 1
 }
 
