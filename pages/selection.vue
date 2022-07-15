@@ -6,7 +6,7 @@ const speedDict = {
     20: 60,
     40: 50,
     60: 40,
-    80: 30,
+    80: 33,
     100: 15
 }
 
@@ -17,19 +17,22 @@ onMounted(() => {
 });
 
 const passColors = (index: number) => {
-    if (index === arrStore.animationsIndx.quickSwap) {
-        return "red";
-    } else if (arrStore.animationsIndx.quickDone.includes(index)) {
-        return "green";
-    } else {
-        return "white";
-    }
+  if (index === arrStore.animationsIndx.selectionSwap_1) {
+    return "yellow";
+  } else if (index === arrStore.animationsIndx.selectionSwap_2){
+    return "red";
+  // }else if (arrStore.animationsIndx.selectionDone != null && arrStore.animationsIndx.selectionDone >= index){
+   }else if (arrStore.animationsIndx.selectionDone.includes(index)){
+    return "green";
+  } else {
+    return "white";
+  }
 }
 
-const quickSort = () => {
+const selectionSort = () => {
     if (arrStore.sortable) {
         arrStore.stopSort = false;
-        arrStore.quickSort();
+        arrStore.selectionSort();
         arrStore.sortable = false;
     }
 }
@@ -40,7 +43,7 @@ const quickSort = () => {
         <h1>{{ arrStore.array }}</h1>
         <ArrayTable :passColors="passColors"></ArrayTable>
         <div class="flex gap-10 mt-10">
-            <button class="btn btn-outline" @click="quickSort">Play</button>
+            <button class="btn btn-outline" @click="selectionSort">Play</button>
             <button class="btn btn-outline" @click="arrStore.pauseSort()">Pause</button>
             <button class="btn btn-outline" @click="arrStore.randomiseArr()">Randomize</button>
         </div>

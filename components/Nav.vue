@@ -12,6 +12,7 @@
                 <li><a href="/merge">Merge Sort</a></li>
                 <li><a href="/quick">Quick Sort</a></li>
                 <li><a href="/insertion">Insertion Sort</a></li>
+                <li><a href="/selection">Selection Sort</a></li>
             </ul>
         </div>
     </div>

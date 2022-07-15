@@ -16,8 +16,11 @@ interface State {
     mergeDone: number[];
     quickSwap: number | null;
     quickDone: number[];
-    insertSwap : number | null;
+    insertSwap: number | null;
     insertDone: number[];
+    selectionSwap_1 : number | null;
+    selectionSwap_2: number | null;
+    selectionDone: number[];
   };
   sortable: boolean;
   stopSort: boolean;
@@ -37,6 +40,7 @@ interface Actions {
   partition(arr: number[], start: number, end: number): Promise<number>;
   quickSort(arr?: number[], start?: number, end?: number): void;
   insertionSort(arr?: number[], n?: number): void;
+  selectionSort(arr?: number[], n?: number): void;
 }
 
 export const useArrStore = defineStore<"array-store", State, {}, Actions>(
@@ -59,7 +63,10 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           quickSwap: null,
           quickDone: [],
           insertSwap: null,
-          insertDone : []
+          insertDone: [],
+          selectionSwap_1: null,
+          selectionSwap_2: null,
+          selectionDone: []
         },
         sortable: true,
         stopSort: false,
@@ -80,7 +87,10 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           quickSwap: null,
           quickDone: [],
           insertSwap: null,
-          insertDone : []
+          insertDone: [],
+          selectionSwap_1: null,
+          selectionSwap_2: null,
+          selectionDone: []
         };
         for (let i = 0; i < this.arrLen; i++) {
           this.array.push(
@@ -101,7 +111,10 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           quickSwap: null,
           quickDone: [],
           insertSwap: null,
-          insertDone : []
+          insertDone: [],
+          selectionSwap_1: null,
+          selectionSwap_2: null,
+          selectionDone: []
         };
         for (let i = 0; i < this.arrLen; i++) {
           this.array.push(
@@ -281,7 +294,6 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
         if (this.stopSort) return;
         this.animationsIndx.insertDone.push(0);
         for (i = 1; i < n; i++) {
-
           key = arr[i];
           j = i - 1;
           /* Move elements of arr[0..i-1], that are  
@@ -299,9 +311,32 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           arr[j + 1] = key;
           await this.timeout(this.sortSpeed);
           this.animationsIndx.insertSwap = null;
-          
+
           if (this.stopSort) return;
           this.animationsIndx.insertDone.push(i);
+        }
+      },
+      async selectionSort(arr: number[] = this.array, n: number = this.arrLen) {
+        let i: number, j: number, min_idx: number;
+
+        // One by one move boundary of unsorted subarray
+        for (i = 0; i < n; i++) {
+          if (this.stopSort == true) return;
+          // Find the minimum element in unsorted array
+          min_idx = i;
+          for (j = i + 1; j < n; j++) if (arr[j] < arr[min_idx]) min_idx = j;
+
+          // Swap the found minimum element with the first element
+          this.animationsIndx.selectionSwap_1 = min_idx;
+          this.animationsIndx.selectionSwap_2 = i;
+          let temp = arr[min_idx];
+          arr[min_idx] = arr[i];
+          arr[i] = temp;
+          await this.timeout(this.sortSpeed);
+          this.animationsIndx.selectionSwap_1 = null;
+          this.animationsIndx.selectionSwap_2 = null;
+          this.animationsIndx.selectionDone.push(i);
+          // (this.animationsIndx.selectionDone == null) ? this.animationsIndx.selectionDone = 1 : this.animationsIndx.selectionDone++;
         }
       },
     },
