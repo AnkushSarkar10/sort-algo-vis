@@ -40,7 +40,6 @@ const selectionSort = () => {
 
 <template>
     <div class="flex flex-col items-center">
-        <h1>{{ arrStore.array }}</h1>
         <ArrayTable :passColors="passColors"></ArrayTable>
         <div class="flex gap-10 mt-10">
             <button class="btn btn-outline" @click="selectionSort">Play</button>

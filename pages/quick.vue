@@ -6,7 +6,7 @@ const speedDict = {
     20: 60,
     40: 50,
     60: 40,
-    80: 30,
+    80: 30, 
     100: 15
 }
 
@@ -37,7 +37,6 @@ const quickSort = () => {
 
 <template>
     <div class="flex flex-col items-center">
-        <h1>{{ arrStore.array }}</h1>
         <ArrayTable :passColors="passColors"></ArrayTable>
         <div class="flex gap-10 mt-10">
             <button class="btn btn-outline" @click="quickSort">Play</button>

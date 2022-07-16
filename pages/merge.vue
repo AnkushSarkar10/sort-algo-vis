@@ -37,10 +37,8 @@ const mergeSort = () => {
 
 <template>
     <div class="flex flex-col items-center">
-        <h1>{{ arrStore.array }}</h1>
         <ArrayTable :passColors="passColors"></ArrayTable>
         <div class="flex gap-10 mt-10">
-            <!-- <button class="btn btn-outline" @click="arrStore.mergeSort(arrStore.array,0,arrStore.arrLen-1)">Play</button> -->
             <button class="btn btn-outline" @click="mergeSort">Play</button>
             <button class="btn btn-outline" @click="arrStore.pauseSort()">Pause</button>
             <button class="btn btn-outline" @click="arrStore.randomiseArr()">Randomize</button>

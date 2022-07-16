@@ -2,8 +2,9 @@ import { defineNuxtConfig } from 'nuxt'
 
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-    // modules: ['@nuxtjs/tailwindcss'],
-    // buildModules: ['@pinia/nuxt', '@nuxtjs/tailwindcss'],
+    css: [
+        '@fortawesome/fontawesome-svg-core/styles.css'
+    ],
     modules: ['@pinia/nuxt', '@nuxtjs/tailwindcss'],
     ssr: true
 })

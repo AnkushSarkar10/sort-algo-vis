@@ -18,7 +18,7 @@ interface State {
     quickDone: number[];
     insertSwap: number | null;
     insertDone: number[];
-    selectionSwap_1 : number | null;
+    selectionSwap_1: number | null;
     selectionSwap_2: number | null;
     selectionDone: number[];
   };
@@ -49,8 +49,8 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
     state: () => {
       return {
         array: [],
-        arrLen: 90,
-        min: 8,
+        arrLen: 94,
+        min: 7,
         max: 190,
         sortSpeed: 1, // in ms
         sliderDefault: 80, // 0 | 20 | 40 | 60 | 80 | 100
@@ -66,7 +66,7 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           insertDone: [],
           selectionSwap_1: null,
           selectionSwap_2: null,
-          selectionDone: []
+          selectionDone: [],
         },
         sortable: true,
         stopSort: false,
@@ -90,7 +90,7 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           insertDone: [],
           selectionSwap_1: null,
           selectionSwap_2: null,
-          selectionDone: []
+          selectionDone: [],
         };
         for (let i = 0; i < this.arrLen; i++) {
           this.array.push(
@@ -102,6 +102,13 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
         this.stopSort = true;
         this.sortable = true;
         this.array = [];
+
+        for (let i = 0; i < this.arrLen; i++) {
+          this.array.push(
+            Math.floor(Math.random() * (this.max - this.min + 1) + this.min)
+          );
+        }
+
         this.animationsIndx = {
           bubleSwap_1: null,
           bubleSwap_2: null,
@@ -114,13 +121,8 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           insertDone: [],
           selectionSwap_1: null,
           selectionSwap_2: null,
-          selectionDone: []
+          selectionDone: [],
         };
-        for (let i = 0; i < this.arrLen; i++) {
-          this.array.push(
-            Math.floor(Math.random() * (this.max - this.min + 1) + this.min)
-          );
-        }
       },
       pauseSort() {
         this.stopSort = true;
@@ -234,7 +236,7 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
         await this.mergeSort(arr, m + 1, r);
         await this.merge(arr, l, m, r);
         for (let i = l; i <= r; i++) {
-          this.animationsIndx.mergeDone.push(i);
+          if (!this.stopSort) this.animationsIndx.mergeDone.push(i);
         }
       },
       // QuickSort
@@ -335,8 +337,7 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
           await this.timeout(this.sortSpeed);
           this.animationsIndx.selectionSwap_1 = null;
           this.animationsIndx.selectionSwap_2 = null;
-          this.animationsIndx.selectionDone.push(i);
-          // (this.animationsIndx.selectionDone == null) ? this.animationsIndx.selectionDone = 1 : this.animationsIndx.selectionDone++;
+          if (!this.stopSort) this.animationsIndx.selectionDone.push(i);
         }
       },
     },
