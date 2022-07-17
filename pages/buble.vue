@@ -19,13 +19,13 @@ onMounted(() => {
 
 const passColors = (index: number) => {
   if (index === arrStore.animationsIndx.bubleSwap_1) {
-    return "yellow";
+    return "#66c6ff";
   } else if (index === arrStore.animationsIndx.bubleSwap_2) {
-    return "red";
+    return "#ff6f6f";
   } else if ((arrStore.arrLen - 1 - arrStore.animationsIndx.bubleDone) < index) {
-    return "green";
+    return "#87d039";
   } else {
-    return "white";
+    return "#ffffff";
   }
 }
 

@@ -6,7 +6,7 @@ const btnClass = "btn btn-ghost btn-xs mx-1 sm:btn-sm md:btn-md lg:btn-lg hover:
   <div class="flex justify-center items-center">
     <div class="typewriter mt-32">
 
-      <h1 class="text-5xl text-primary mb-14 p-2">Sorting Algorithm Visualiser</h1>
+      <h1 class="text-5xl text-primary mb-16 p-2">Sorting Algorithm Visualiser</h1>
       <h2 id="subtitle1" class="text-2xl text-center mb-4">"In computer science, a sorting algorithm is an algorithm that
         puts
         elements of a list into an order"</h2>

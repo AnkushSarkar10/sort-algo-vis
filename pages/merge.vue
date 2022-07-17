@@ -18,11 +18,11 @@ onMounted(() => {
 
 const passColors = (index: number) => {
   if (index === arrStore.animationsIndx.mergeSwap) {
-    return "yellow";
+    return "#e2d562";
   } else if (arrStore.animationsIndx.mergeDone.includes(index)) {
-    return "green";
+    return "#87d039";
   } else {
-    return "white";
+    return "#ffffff";
   }
 }
 

@@ -28,4 +28,5 @@ module.exports = {
 //   success: "#87d039", green
 //   warning: "#e2d562", light yellow
 //   error: "#ff6f6f", pinkish red
-// } 
+// }
+

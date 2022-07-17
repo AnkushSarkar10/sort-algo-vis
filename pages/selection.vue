@@ -6,7 +6,7 @@ const speedDict = {
     20: 60,
     40: 50,
     60: 40,
-    80: 33,
+    80: 35,
     100: 15
 }
 
@@ -18,14 +18,14 @@ onMounted(() => {
 
 const passColors = (index: number) => {
   if (index === arrStore.animationsIndx.selectionSwap_1) {
-    return "yellow";
+    return "#66c6ff";
   } else if (index === arrStore.animationsIndx.selectionSwap_2){
-    return "red";
+    return "#ff6f6f";
   // }else if (arrStore.animationsIndx.selectionDone != null && arrStore.animationsIndx.selectionDone >= index){
    }else if (arrStore.animationsIndx.selectionDone.includes(index)){
-    return "green";
+    return "#87d039";
   } else {
-    return "white";
+    return "#ffffff";
   }
 }
 

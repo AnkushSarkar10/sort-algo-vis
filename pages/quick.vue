@@ -18,11 +18,11 @@ onMounted(() => {
 
 const passColors = (index: number) => {
     if (index === arrStore.animationsIndx.quickSwap) {
-        return "red";
+        return "#ff6f6f";
     } else if (arrStore.animationsIndx.quickDone.includes(index)) {
-        return "green";
+        return "#87d039";
     } else {
-        return "white";
+        return "#ffffff";
     }
 }
 
