@@ -241,7 +241,6 @@ export const useArrStore = defineStore<"array-store", State, {}, Actions>(
       },
       // QuickSort
       async partition(arr: number[], start: number, end: number) {
-        console.log("hey");
         // Taking the last element as the pivot
         const pivotValue = arr[end];
         let pivotIndex = start;

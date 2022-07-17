@@ -4,6 +4,8 @@
     <div>
         <Nav></Nav>
         <slot></slot>
+        <a class="fixed right-4 bottom-5 text-primary text-5xl hover:text-6xl hover:animate-pulse-fast" href="https://github.com/AnkushSarkar10/sort-algo-vis" target="_blank"><font-awesome-icon icon="fa-brands fa-github"/></a>
+        
     </div>
 </template>
 
@@ -25,4 +27,7 @@ html, body {
     height: 100%;
     overflow: hidden
 }
+/* font-awesome-icon {
+    position: fixed;
+} */
 </style>

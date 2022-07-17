@@ -3,7 +3,6 @@ const navItemsClass = "hover:btn-primary mx-2";
 const activeClass = "btn bg-base-200 text-primary font-semibold mt-1";
 // const activeClass = "tab tab-lg bg-base-300 tab-active text-primary font-semibold";
 const route = useRoute();
-console.log(route.name);
 // switch (route.name) {
 //   case "buble"
 // }
