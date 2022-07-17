@@ -2,52 +2,44 @@
 import { useArrStore } from "~/store";
 const arrStore = useArrStore();
 const speedDict = {
-    0: 70,
-    20: 40,
-    40: 25,
-    60: 15,
-    80: 8,
-    100: 1
+  0: 70,
+  20: 40,
+  40: 25,
+  60: 15,
+  80: 8,
+  100: 1
 }
 
 onMounted(() => {
-    arrStore.$reset();
-    arrStore.genNewArr();
-    arrStore.sortSpeed = speedDict[arrStore.sliderDefault];
+  arrStore.$reset();
+  arrStore.genNewArr();
+  arrStore.sortSpeed = speedDict[arrStore.sliderDefault];
 });
 
 const passColors = (index: number) => {
-    if (index === arrStore.animationsIndx.insertSwap) {
-        return "red";
-    } else if (arrStore.animationsIndx.insertDone.includes(index)) {
-        return "green";
-    } else {
-        return "white";
-    }
+  if (index === arrStore.animationsIndx.insertSwap) {
+    return "red";
+  } else if (arrStore.animationsIndx.insertDone.includes(index)) {
+    return "green";
+  } else {
+    return "white";
+  }
 }
 
 const insertonSort = () => {
-    if (arrStore.sortable) {
-        arrStore.stopSort = false;
-        arrStore.insertionSort();
-        arrStore.sortable = false;
-    }
+  if (arrStore.sortable) {
+    arrStore.stopSort = false;
+    arrStore.insertionSort();
+    arrStore.sortable = false;
+  }
 }
+
 </script>
 
 <template>
-    <div class="flex flex-col items-center">
-        <ArrayTable :passColors="passColors"></ArrayTable>
-        <div class="flex gap-10 mt-10">
-            <button class="btn btn-outline" @click="insertonSort">Play</button>
-            <button class="btn btn-outline" @click="arrStore.pauseSort()">Pause</button>
-            <button class="btn btn-outline" @click="arrStore.randomiseArr()">Randomize</button>
-        </div>
-        <div class="w-screen">
-            <SpeedSlider :speedDict="speedDict"></SpeedSlider>
-        </div>
-    </div>
+  <NuxtLayout name="sort" :speedDict="speedDict" :passColors="passColors" :sortFunc="insertonSort"></NuxtLayout>
 </template>
+
  
 <style scoped>
 </style>

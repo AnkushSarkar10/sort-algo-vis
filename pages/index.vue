@@ -1,7 +1,5 @@
 <script setup lang="ts">
-const btnClass = "btn btn-ghost btn-xs mx-1 sm:btn-sm md:btn-md lg:btn-lg hover:btn-primary hover:mx-3 hover:animate-pulse-fast";
-// const h2Class = "text-primary text-lg text-center mb-0.5";
-
+const btnClass = "btn btn-ghost btn-xs mx-1 sm:btn-sm md:btn-md lg:btn-lg hover:btn-primary hover:mx-2 hover:animate-pulse-fast";
 </script>
 
 <template>
@@ -15,7 +13,7 @@ const btnClass = "btn btn-ghost btn-xs mx-1 sm:btn-sm md:btn-md lg:btn-lg hover:
       <h2 id="subtitle2" class="text-primary text-xl text-center font-semibold">Select the algorithm you would like to visualize !
       </h2>
 
-      <div id="butdiv" class="mt-16 text-center flex flex-wrap">
+      <div id="butdiv" class="mt-16 text-center flex flex-wrap justify-center">
         <button :class="btnClass" @click="$router.push('buble')">Bubble Sort</button>
         <button :class="btnClass" @click="$router.push('merge')">Merge Sort</button>
         <button :class="btnClass" @click="$router.push('quick')">Quick Sort</button>

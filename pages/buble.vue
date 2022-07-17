@@ -29,21 +29,19 @@ const passColors = (index: number) => {
   }
 }
 
+const bubleSort = () => {
+    if (arrStore.sortable) {
+        arrStore.stopSort = false;
+        arrStore.bubleSort();
+        arrStore.sortable = false;
+    }
+}
+
 </script>
 
 <template>
-  <div class="flex flex-col items-center">
-    <div class="w-screen">
-      <SpeedSlider :speedDict="speedDict"></SpeedSlider>
-    </div>
-    <ArrayTable :passColors="passColors"></ArrayTable>
-    <div class="flex gap-10 mt-10">
-      <button class="btn btn-outline" @click="arrStore.bubleSort()"><font-awesome-icon icon="fa-solid fa-play" class="mr-2"/>Play</button>
-      <button class="btn btn-outline" @click="arrStore.pauseSort()"><font-awesome-icon icon="fa-solid fa-pause" class="mr-2"/>Pause</button>
-      <button class="btn btn-outline" @click="arrStore.randomiseArr()"><font-awesome-icon icon="fa-solid fa-shuffle" class="mr-2"/>Randomize</button>
-    </div>
-  </div>
+  <NuxtLayout name="sort" :speedDict="speedDict" :passColors="passColors" :sortFunc="bubleSort"></NuxtLayout>
 </template>
 
-<style scoped>
+<style>
 </style>

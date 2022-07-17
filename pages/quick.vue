@@ -36,17 +36,7 @@ const quickSort = () => {
 </script>
 
 <template>
-    <div class="flex flex-col items-center">
-        <ArrayTable :passColors="passColors"></ArrayTable>
-        <div class="flex gap-10 mt-10">
-            <button class="btn btn-outline" @click="quickSort">Play</button>
-            <button class="btn btn-outline" @click="arrStore.pauseSort()">Pause</button>
-            <button class="btn btn-outline" @click="arrStore.randomiseArr()">Randomize</button>
-        </div>
-        <div class="w-screen">
-            <SpeedSlider :speedDict="speedDict"></SpeedSlider>
-        </div>
-    </div>
+<NuxtLayout name="sort" :speedDict="speedDict" :passColors="passColors" :sortFunc="quickSort"></NuxtLayout>
 </template>
  
 <style scoped>
