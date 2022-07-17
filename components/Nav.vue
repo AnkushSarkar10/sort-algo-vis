@@ -1,6 +1,7 @@
 <script setup>
 const navItemsClass = "hover:btn-primary mx-2";
-const activeClass = "btn bg-base-200 text-primary font-semibold";
+const activeClass = "btn bg-base-200 text-primary font-semibold mt-1";
+// const activeClass = "tab tab-lg bg-base-300 tab-active text-primary font-semibold";
 const route = useRoute();
 console.log(route.name);
 // switch (route.name) {
@@ -15,7 +16,7 @@ console.log(route.name);
             <a class="ml-4 px-4 py-2 text-primary text-xl hover:btn-primary rounded-lg" href="/">Home</a>
         </div>
         <div class="flex-none">
-            <ul class="menu menu-horizontal p-0">
+            <ul class="menu menu-horizontal p-0 tabs">
                 <li><a :class="[route.name == 'buble' ? activeClass : '' ,navItemsClass]" href="/buble">Buble Sort</a></li>
                 <li><a :class="[route.name == 'merge'  ? activeClass : '' ,navItemsClass]" href="/merge">Merge Sort</a></li>
                 <li><a :class="[route.name == 'quick'  ? activeClass : '' ,navItemsClass]" href="/quick">Quick Sort</a></li>

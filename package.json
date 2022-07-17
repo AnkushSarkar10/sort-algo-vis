@@ -17,6 +17,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.1",
     "@pinia/nuxt": "^0.1.9",
     "daisyui": "^2.18.1",
+    "katex": "^0.16.0",
     "pinia": "^2.0.14"
   }
 }

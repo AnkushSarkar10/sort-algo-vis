@@ -14,22 +14,27 @@ const props = defineProps({
 })
 
 const algoName = ref("")
-
+const algoLink = ref("") 
 switch (props.sortFunc.name) {
     case "bubleSort":
         algoName.value = "Buble Sort";
+        algoLink.value = "https://www.geeksforgeeks.org/bubble-sort/";
         break;
     case "mergeSort":
         algoName.value = "Merge Sort";
+        algoLink.value = "https://www.geeksforgeeks.org/merge-sort/";
         break;
     case "insertonSort":
         algoName.value = "Insertion Sort";
+        algoLink.value = "https://www.geeksforgeeks.org/insertion-sort/";
         break;
     case "quickSort":
         algoName.value = "Quick Sort";
+        algoLink.value = "https://www.geeksforgeeks.org/quick-sort/";
         break;
     case "selectionSort":
         algoName.value = "Selection Sort";
+        algoLink.value = "https://www.geeksforgeeks.org/selection-sort/";
         break;
 }
 </script>
@@ -52,9 +57,7 @@ switch (props.sortFunc.name) {
                     <font-awesome-icon icon="fa-solid fa-shuffle" class="mr-2" />Randomize
                 </button>
             </div>
-            <label class="mt-12 text-sm underline hover:cursor-pointer hover:text-primary" for="my-modal-4">Learn
-                More</label>
-            <LearnMore :algoName="algoName"></LearnMore>
+            <a class="mt-12 text-sm underline hover:cursor-pointer hover:text-primary" :href="algoLink" target="_blank">Learn More</a>
         </div>
     </div>
 </template>
