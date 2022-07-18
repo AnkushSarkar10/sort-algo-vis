@@ -4,5 +4,6 @@ import { defineNuxtConfig } from "nuxt";
 export default defineNuxtConfig({
   css: ["@fortawesome/fontawesome-svg-core/styles.css"],
   modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss"],
-  ssr: false
+  // ssr: false,
+  target: 'static'
 });
