@@ -13,6 +13,11 @@ const props = defineProps({
     }
 })
 
+onMounted(() => {
+    console.log("mounted");
+});
+
+
 const algoName = ref("")
 const algoLink = ref("") 
 switch (props.sortFunc.name) {
@@ -48,7 +53,7 @@ switch (props.sortFunc.name) {
         <div id="butdiv" class="flex flex-col justify-center items-center">
             <div class="flex gap-10 mt-20 flex-wrap justify-center">
                 <button class="btn btn-outline hover:btn-secondary" @click="props.sortFunc()">
-                    <font-awesome-icon icon="fa-solid fa-play" class="mr-2" />Play e
+                    <font-awesome-icon icon="fa-solid fa-play" class="mr-2" />Play
                 </button>
                 <button class="btn btn-outline hover:btn-secondary" @click="arrStore.pauseSort()">
                     <font-awesome-icon icon="fa-solid fa-pause" class="mr-2" />Pause
