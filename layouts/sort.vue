@@ -13,10 +13,6 @@ const props = defineProps({
     }
 })
 
-onMounted(() => {
-    console.log("mounted");
-});
-
 
 const algoName = ref("")
 const algoLink = ref("") 
