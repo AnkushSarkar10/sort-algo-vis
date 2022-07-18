@@ -7,6 +7,6 @@ export default defineNuxtConfig({
   // ssr: false,
   target: 'static',
   nitro: {
-    serveStatic: true
+    preset: "node-server"
   }
 });
