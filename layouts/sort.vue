@@ -15,7 +15,7 @@ const props = defineProps({
 
 
 const algoName = ref("")
-const algoLink = ref("") 
+const algoLink = ref("")
 switch (props.sortFunc.name) {
     case "bubleSort":
         algoName.value = "Buble Sort";
@@ -58,7 +58,8 @@ switch (props.sortFunc.name) {
                     <font-awesome-icon icon="fa-solid fa-shuffle" class="mr-2" />Randomize
                 </button>
             </div>
-            <a class="mt-12 text-sm underline hover:cursor-pointer hover:text-primary" :href="algoLink" target="_blank">Learn More</a>
+            <a class="mt-12 text-sm underline hover:cursor-pointer hover:text-primary" :href="algoLink"
+                target="_blank">Learn More</a>
         </div>
     </div>
 </template>
