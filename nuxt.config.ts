@@ -5,5 +5,8 @@ export default defineNuxtConfig({
   css: ["@fortawesome/fontawesome-svg-core/styles.css"],
   modules: ["@pinia/nuxt", "@nuxtjs/tailwindcss"],
   // ssr: false,
-  target: 'static'
+  target: 'static',
+  nitro: {
+    serveStatic: true
+  }
 });
