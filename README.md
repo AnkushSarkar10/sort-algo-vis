@@ -1,5 +1,5 @@
 # Sorting Algorithm Visualiser
 
-A Visualiser for sorting algorithms 
+A web app for visualizing sorting algorithms. 
 
 https://sorting-algo-visualiser.netlify.app/
