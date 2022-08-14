@@ -79,7 +79,6 @@ switch (props.sortFunc.name) {
     0% {
         position: relative;
         opacity: 0;
-        top: 150px;
     }
 
     75% {
@@ -88,7 +87,6 @@ switch (props.sortFunc.name) {
 
     100% {
         position: relative;
-        top: 0px;
     }
 }
 
@@ -96,26 +94,24 @@ switch (props.sortFunc.name) {
     0% {
         position: relative;
         opacity: 0;
-        bottom: 50px;
     }
 
     100% {
         position: relative;
         opacity: 1;
-        bottom: 0px;
     }
 }
 
 
 #butdiv {
-    animation: sortButt ease-in-out 1.5s;
+    animation: sortButt ease-in-out 0.2s;
 }
 
 #arr {
-    animation: sortFadein ease-in 1s;
+    animation: sortFadein ease-in 0.2s;
 }
 
 #slider {
-    animation: sortSlider ease-in 1s;
+    animation: sortSlider ease-in 0.1s;
 }
 </style>
